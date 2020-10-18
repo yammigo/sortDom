@@ -117,18 +117,18 @@ $.fn.extend({
 })
 
 //js-core 核心
-var arrdata=[5,4,2,3,1,0]
-function sortData(index){
-        var newarray = arrdata.slice();
-        var val = newarray[index];
-        arrdata[index]=Math.max.apply(null,arrdata);
-        $.each(newarray,(index2,item)=>{
-            if(index!==index2&&arrdata[index2]-1>=val){
-                arrdata[index2]-=1;
-            }
+// var arrdata=[5,4,2,3,1,0]
+// function sortData(index){
+//         var newarray = arrdata.slice();
+//         var val = newarray[index];
+//         arrdata[index]=Math.max.apply(null,arrdata);
+//         $.each(newarray,(index2,item)=>{
+//             if(index!==index2&&arrdata[index2]-1>=val){
+//                 arrdata[index2]-=1;
+//             }
             
-        })
-}
-sortData(4);
-console.log(arrdata);
+//         })
+// }
+// sortData(4);
+// console.log(arrdata);
 
