@@ -8,6 +8,7 @@
 $.fn.extend({
     dbUtil:{
         dbType:!!window.localStorage?"local":navigator.cookieEnabled?"cookie":"var",
+        // dbType:'cookie',
         setData:function(key,value,t){
             
             if(this.dbType=='cookie'){
@@ -53,62 +54,44 @@ $.fn.extend({
             }
         }
     },
-    sortDom: function (namespace,childrens) {
+    sortDom: function (namespace) {
+        // console.log($(this));
         var dbUtil = $.fn.dbUtil;
         var _this=$(this);
-        var childrens=childrens||$(this).children();
-        var childrenSize = childrens.size();
+        var childrens=$(this).children();
         function setCache(data) {
             dbUtil.setData(namespace,JSON.stringify(data));
         }
-        //js-core diff
-        function sortData(index,arrdata){
-            var domIndex=arrdata.slice().sort(function(a,b){return a-b>0&&-1});
-            console.log(domIndex,"sss");
-            var maxVal= Math.max.apply(null,arrdata.slice());
-            if(!(index>=0)||!(index<=arrdata.length)){
-               throw "参数不正确"
-            }
-            var itemIndex=arrdata.indexOf(domIndex[index]);
-            var step=arrdata[itemIndex]+1;
-            while(step<=maxVal){ 
-                arrdata[arrdata.indexOf(step)]-=1;
-                step++;
-            }
-            arrdata[itemIndex]=maxVal;
-            return arrdata;
-        }
-        var sortThread = {sortAscending:false};
+        var sortThread = {};
+
         try {
             var cacheTime =JSON.parse(dbUtil.getData(namespace));
+            
         } catch (error) {
+           
             var cacheTime =[];
         }
         (!cacheTime || cacheTime.length == 0) && (cacheTime = [],dbUtil.setData(namespace, '[]'));
-        //标记子元素
-        childrens.each(function (index, item) {
-            $(item).attr('data-sort',(cacheTime.length>0&&cacheTime[index]||cacheTime[index]==0)?cacheTime[index]:childrenSize-index-1);
-            cacheTime[index]=cacheTime.length>0&&(cacheTime[index]||cacheTime[index]==0)?cacheTime[index]:childrenSize-index-1;
+        var time =0;
+        $(this).children().each(function (index, item) {
+            $(item).attr("data-index",index);
+            $(item).attr('data-sort',cacheTime[index]||time);
+            cacheTime[index] = cacheTime[index]||time;
         })
         childrens.on('click', function () {
-            var cacheData=sortData($(this).index(),cacheTime);
-            sortDom(cacheData);
-            setCache(cacheTime,cacheData);
+            var index=$(this).attr('data-index'),time=(+new Date);
+            $(this).attr('data-sort',time);
+            cacheTime[index]=time;
+            setCache(cacheTime);
         })
         sortThread.sortAscending = true;
-        function sortDom(cacheData) {
-            //打标记
-        //     if(cacheData){
-        //         childrens.each(function (index, item) {
-        //             $(item).attr('data-sort',cacheData[index]);
-        //         })
-        //    }
-            //
+        function sortDom() {
+            // console.log("执行排序方法",childrens);
             if(cacheTime.length==0) return;
             sortThread.sortAscending = !sortThread.sortAscending;
             childrens.sort(function (a, b) {
-                var sort1 = $(a).attr('data-sort') * 1;
-                var sort2 = $(b).attr('data-sort') * 1;
+                var sort1 = a.getAttribute('data-sort') * 1;
+                var sort2 = b.getAttribute('data-sort') * 1;
                 var sortNum = 1;
                 if (!sortThread.sortAscending)
                     sortNum = -1;
@@ -118,40 +101,34 @@ $.fn.extend({
                     return -1 * sortNum;
                 return 0;
             });
-            //删除挂载在元素上的属性
-            childrens.each(function(index,item){
-                $(item).removeAttr('data-sort');
-            })
-            childrens.detach().appendTo(_this);  
+           
+            setCache(cacheTime,true);
+            childrens.detach().appendTo(_this);
+          
+            
         }
         sortDom();//初始化
         return $(this);
     },
-    resetSortDom:function(namespace,childrens){
+    resetSortDom:function(namespace){
         $.fn.dbUtil.removeData(namespace);
-        //childrens&&$(this).sortDom(namespace,childrens);
         return true;
     }
 })
 
-//js-core 优化算法
-// function sortData(index,arrdata){
-//     var domIndex=arrdata.slice().reverse();
-//     var maxVal= Math.max.apply(null,arrdata.slice());
-//     if(!(index>=0)||!(index<=arrdata.length)){
-//        throw "参数不正确"
-//     }
-//     var itemIndex=arrdata.indexOf(domIndex[index]);
-//     var step=arrdata[itemIndex]+1;
-//     while(step<=5){ 
-//         arrdata[arrdata.indexOf(step)]-=1;
-//         step++;
-//     }
-//     arrdata[itemIndex]=maxVal;
-//     return arrdata;
+//js-core 核心
+// var arrdata=[5,4,2,3,1,0]
+// function sortData(index){
+//         var newarray = arrdata.slice();
+//         var val = newarray[index];
+//         arrdata[index]=Math.max.apply(null,arrdata);
+//         $.each(newarray,(index2,item)=>{
+//             if(index!==index2&&arrdata[index2]-1>=val){
+//                 arrdata[index2]-=1;
+//             }
+            
+//         })
 // }
-// console.log(sortData(1,[5,3,1,2,4,0]));
-
-
-
+// sortData(4);
+// console.log(arrdata);
 
