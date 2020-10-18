@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+    <!-- <script src="http:vantop/scripts/script/Home/jquery-1.7.1.js"></script> -->
+    <script src="./sortDom2.js"></script>
+    <title>Document</title>
+    <script>
+        function parent() {
+            document.getElementById("child").contentWindow.document.getElementById('iframeButton').style.display = "none"
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <ul id="ulList">
+            <li>元素0</li>
+            <li>元素1</li>
+            <li>元素2</li>
+            <li>元素3</li>
+            <li>元素4</li>
+        </ul>
+    </div>
+    <button onclick="parent()" style="position:absolute;top:0px;right:0px;">我是父页面</button>
+    <button id="ReverseOrder">重置排序</button>
+    <script>
+        $(function () {
+           
+            // $.fn.extend({
+            //     sortDom: function () {
+            //         var _this=$(this);
+            //         var childrens=$(this).children();
+            //         function setCache(stringData) {
+            //             window.localStorage.setItem('cacheTime', stringData);
+            //         }
+            //         var sortThread = {};
+            //         var cacheTime = window.localStorage && JSON.parse(localStorage.getItem('cacheTime'));
+            //         (!cacheTime || cacheTime.length == 0) && (cacheTime = [], localStorage.setItem('cacheTime', '[]'));
+            //         var timer = 1;
+            //         $(this).children().each(function (index, item) {
+            //             $(item).attr('data-sort', cacheTime[index] || timer);
+            //             cacheTime[index] = cacheTime[index] || timer;
+            //         })
+            //         setCache(JSON.stringify(cacheTime));
+            //         childrens.on('click', function () {
+            //             var newTimer = (+new Date);
+            //             $(this).attr('data-sort', newTimer);
+            //             cacheTime[$(this).index()] = newTimer;
+            //             setCache(JSON.stringify(cacheTime));
+            //         })
+            //         sortThread.sortAscending = true;
+            //         function sortDom() {
+            //             console.log("执行初始化")
+            //             sortThread.sortAscending = !sortThread.sortAscending;
+            //             childrens.sort(function (a, b) {
+            //                 console.log("排序");
+            //                 var sort1 = a.getAttribute('data-sort') * 1;
+            //                 var sort2 = b.getAttribute('data-sort') * 1;
+            //                 var sortNum = 1;
+            //                 if (!sortThread.sortAscending)
+            //                     sortNum = -1;
+            //                 if (sort1 > sort2)
+            //                     return 1 * sortNum;
+            //                 if (sort1 < sort2)
+            //                     return -1 * sortNum;
+            //                 return 0;
+            //             });
+            //             console.log($(this));
+            //             // $(this).append(childrens.detach());
+            //             childrens.detach().appendTo(_this);
+            //         }
+            //         sortDom();//初始化
+            //     }
+            // })
+            $("#ulList").sortDom('fanjiantao');
+            $("#ReverseOrder").on('click',function(){
+                console.log("重置");
+                $("#ulList").resetStortDom('fanjiantao');
+            })          
+            
+            // function setCache(stringData) {
+            //     window.localStorage.setItem('cacheTime', stringData);
+            // }
+            // var sortThread = {};
+            // var cacheTime = window.localStorage && JSON.parse(localStorage.getItem('cacheTime'));
+            // console.log(cacheTime);
+            // (!cacheTime || cacheTime.length == 0) && (cacheTime = [], localStorage.setItem('cacheTime', '[]'));
+            // var timer = 1;
+            // $("#ulList").children().each(function (index, item) {
+            //     $(item).attr('data-sort', cacheTime[index] || timer);
+            //     cacheTime[index] = cacheTime[index] || timer;
+            // })
+            // setCache(JSON.stringify(cacheTime));
+            // $("#ulList").children().on('click', function () {
+            //     alert('asdad');
+            //     var newTimer = (+new Date);
+            //     $(this).attr('data-sort', newTimer);
+            //     cacheTime[$(this).index()] = newTimer;
+            //     setCache(JSON.stringify(cacheTime));
+            // })
+            // sortThread.sortAscending = true;
+            // function sortDom() {
+            //     sortThread.sortAscending = !sortThread.sortAscending;
+            //     var $msgListItem = $("#ulList").children();
+            //     $msgListItem.sort(function (a, b) {
+            //         var sort1 = a.getAttribute('data-sort') * 1;
+            //         var sort2 = b.getAttribute('data-sort') * 1;
+            //         var sortNum = 1;
+            //         if (!sortThread.sortAscending)
+            //             sortNum = -1;
+            //         if (sort1 > sort2)
+            //             return 1 * sortNum;
+            //         if (sort1 < sort2)
+            //             return -1 * sortNum;
+            //         return 0;
+            //     });
+            //     $msgListItem.detach().appendTo("#ulList");
+
+            // }
+            // $("#ReverseOrder").on("click",sortDom);
+        });
+    </script>
+</body>
+
+</html>
