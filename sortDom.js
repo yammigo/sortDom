@@ -64,7 +64,7 @@ $.fn.extend({
         //js-core diff
         function sortData(index,arrdata){
             var domIndex=arrdata.slice().sort(function(a,b){return a-b>0&&-1});
-            console.log(domIndex,"sss");
+            //console.log(domIndex,"sss");
             var maxVal= Math.max.apply(null,arrdata.slice());
             if(!(index>=0)||!(index<=arrdata.length)){
                throw "参数不正确"
