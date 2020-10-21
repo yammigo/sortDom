@@ -32,7 +32,7 @@ jquery
 * `$(select).resetSortDom(命名空间)` (移除)
 
 以下方法可用于更改命名空间的的排列顺序
-* `$.fn.dbUtil.setData(key,val)` (工具方法--存储数据)
+<div style="color:red">* `$.fn.dbUtil.setData(key,val)`</div> (工具方法--存储数据)
 * `$.fn.dbUtil.getData(key)` (工具方法--获取数据数据)
 * `$.fn.dbUtil.removeData(key)` (工具方法--删除数据) 
 
