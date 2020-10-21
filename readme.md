@@ -8,7 +8,7 @@ jquery
 
 ```html
  <script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
- <script src="./sortDom2.js"></script>
+ <script src="./sortDom.js"></script>
 
  <ul id="ulList">
             <li>元素0</li>
